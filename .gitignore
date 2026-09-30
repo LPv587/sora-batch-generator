@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dist-electron/
+release/
+*.exe
+*.zip
+*.7z
+*.log
+.env
+data/
+test-output/
