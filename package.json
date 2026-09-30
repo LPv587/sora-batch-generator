@@ -1,0 +1,80 @@
+{
+  "name": "sora-batch-generator",
+  "version": "2.0.0",
+  "description": "Sora API 批量生图工具",
+  "main": "dist-electron/electron/main.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build:electron": "tsc -p tsconfig.node.json",
+    "build:renderer": "vite build",
+    "build": "npm run build:electron && npm run build:renderer && electron-builder",
+    "preview": "vite preview",
+    "start": "npm run build:electron && electron .",
+    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "electron:build": "tsc -p tsconfig.node.json && vite build && electron-builder"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3",
+    "electron-packager": "^17.1.2",
+    "rcedit": "^5.0.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "wait-on": "^7.2.0"
+  },
+  "author": "SoraBatchGenerator",
+  "build": {
+    "appId": "com.sora.batch-generator",
+    "productName": "SoraBatchGenerator",
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json",
+      "!src/**/*",
+      "!electron/**/*",
+      "!node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SoraBatchGenerator",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    }
+  },
+  "optionalDependencies": {
+    "@esbuild/win32-x64": "^0.28.2"
+  }
+}
